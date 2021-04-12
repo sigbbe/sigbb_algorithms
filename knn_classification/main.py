@@ -57,9 +57,12 @@ def main():
     assert len(X_test) == len(y_test)
     assert len(y_test) == 2681
 
-    x1 = X_array[1]
-    x2 = X_array[2]
-    print("distance:", distance(x1, x2), x1, x2)
+    indexes = []
+    temp_arr = np.ndarray(shape=X_train.shape)
+    print(len(temp_arr))
+    _indexes = list(map(lambda x: np.where(X_train, x), X_train))
+    print(_indexes)
+    # while (len(indexes) < len(X_train)):
 
 
 if __name__ == '__main__':
