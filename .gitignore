@@ -513,6 +513,8 @@ Thumbs.db
 
 # Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
 
+**kok/
+**kok.*
 
 # Sonarlint plugin
 
