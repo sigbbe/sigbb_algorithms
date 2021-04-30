@@ -14,11 +14,9 @@ def count_of_element(ls, el):
 
 if __name__ == "__main__":
     itemSetList = []
-    data = pd.read_csv('./data/oeving_5.csv',
+    data = pd.read_csv('./data/oeving_5_with_fields.csv',
                        delimiter=',', keep_default_na=False)
-    for row in data.index.tolist():
-        itemSetList.append(list(filter(lambda x: x != '', row)))
-
+    print(itemSetList)
     # df = spark.createDataFrame([
     #     (110, ["A", "B", "C", "F", "G", "H"]),
     #     (111, ["A", "B", "C", "E", "G"]),

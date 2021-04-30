@@ -1,6 +1,48 @@
 #! /usr/bin/python3.8
 
+import collections
+
+import numpy as np
+import pandas as pd
 from anytree import Node, RenderTree
+from numpy.lib import math
+
+
+def correlation_coefficient(x, y):
+    """
+    Description ...
+    Args:
+        x: n dimensional vector
+        y: n dimensional vector
+    Returns:
+       The computed Pearson’s product moment coefficient for the two argument vectors.
+    """
+    n = len(x)
+    if not(len(y) == n):
+        return -2
+    r_of_x_y = 0
+    std_x, std_y = np.std(x), np.std(y)
+    mean_of_x, mean_of_y = np.mean(x), np.mean(y)
+    for i in range(n):
+        r_of_x_y += (x[i] - mean_of_x) * (y[i] - mean_of_y)
+    print(std_y)
+    return r_of_x_y / (n * std_x * std_y)
+
+
+def get_flat_file_data_frame(url):
+    """
+    Description
+
+    Args:
+        url (string): path to the csv file.
+
+    Returns:
+        data (ndarray): an n-dimensional array containing the data of the specified file.
+    """
+    df = pd.read_csv(url, keep_default_na=False,
+                     encoding='utf-8', chunksize=1)
+    return np.array([chunk.values.tolist()[0] for chunk in df])
+
 
 # Data:
 #               Age: {Young (0), Middle (1), Old (2)}
@@ -14,15 +56,36 @@ income = ['Low', 'Medium', 'High']
 student = ['Yes', 'No']
 creditworthiness = ['Pass', 'High']
 pc_on_credit = student
+columns = ['ID', age, income, student, creditworthiness, pc_on_credit]
 
 
 def gini_index(data_partition=None):
-    if data_partition == None:
-        return -1
-    len_of_d = len(data_partition)
+    shape = data_partition.shape
+    if len(shape) == 1:
+        len_of_d = len(data_partition)
+        p_i = None
+        # Probability that a tuple i in D belongs to class C_i
+        # p_i = |C_i,D|/|D|
+        counter = collections.Counter(data_partition)
+        zum = 0
+        for i in range(len(data_partition)):
+            c_i_d = counter[data_partition[i]]
+            p_i = c_i_d / len_of_d
+            zum = math.pow(p_i, 2)
+        return 1 - zum
+    elif len(shape) == 2:
+        return 0
+    return -1
 
-    p_i = None
-    return data_partition
+
+def gini(x):
+    mean_absolute_distance = np.abs(np.subtract.outer(x, x)).mean()
+    # Relative mean absolute difference
+    relative_mean_absolute_distance = mean_absolute_distance/np.mean(x)
+    # Gini coefficient
+    # This implementation of the Gini coefficient uses the fact that the
+    # Gini coefficient is half the relative mean absolute difference.
+    return 0.5 * relative_mean_absolute_distance
 
 
 def is_discrete(x):
@@ -103,8 +166,17 @@ def main():
 
 
 if __name__ == '__main__':
-    # main()
-    a = 3.14
-    a_prime = 3.145
-    print(hash(a))
-    print(hash(a_prime))
+    dataset = get_flat_file_data_frame('./data/oeving_5.csv')
+    n_dimensions = len(dataset.shape)
+    dataset_transposed = dataset.T
+    for i in range(len(dataset_transposed)):
+        column = dataset_transposed[i]
+        # print(
+        #     f'Standard deviation of {columns[i]}: {np.std(dataset_transposed[i])}')
+    x_0 = np.array([1, 1, 1, 1])
+    y_0 = [3, 3, 3, 3]
+    pc_on_credit = dataset_transposed[5]
+    print(len(list(pc_on_credit[pc_on_credit == 1])))
+
+    print(
+        f'Gini index for dataset: {float(1 - (math.pow(12/20, 2) + math.pow(8/20, 2)))}')
