@@ -16,6 +16,7 @@ Quantitative:
 - Interval: interval scale offers labels, order, as well as, a specific interval between each of its variable options.  
 - Ratio: ratio scale bears all the characteristics of an interval scale, in addition to that, it can also accommodate the value of “zero” on any of its variables.
 
-a) Time in terms of AM and PM: Continous, quantitative, ratio. Here we assume that you mean
-   time as in a single point in time between 00:00.00 and 23:59.59 (AM or PM).  
-b) Brightness as measured by a light meter: Continous, ., ..
+- Nominal
+- Ordinal
+- Interval
+- Ratio
