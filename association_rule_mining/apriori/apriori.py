@@ -4,6 +4,8 @@ from collections import defaultdict
 from itertools import chain, combinations
 from optparse import OptionParser
 
+__author__ = 'Not me'
+
 
 def subsets(arr):
     """ Returns non empty subsets of arr"""

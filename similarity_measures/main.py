@@ -7,6 +7,8 @@ from sklearn.metrics import jaccard_score as scikit_jaccard
 from sklearn.metrics.pairwise import cosine_similarity as scikit_cosine
 from sklearn.metrics.pairwise import euclidean_distances as scikit_euclidean
 
+from .sigbbe_algorithms.utils import plot
+
 data = np.array([
     dict(
         x=np.array([1, 1, 1, 1]),
@@ -119,4 +121,4 @@ def calculate_motherfucking_jaccard_distance(a, b):
 
 
 if __name__ == '__main__':
-    main()
+    print(plot)

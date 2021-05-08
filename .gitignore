@@ -516,6 +516,8 @@ Thumbs.db
 **kok/
 **kok.*
 **/*.vscode/
+**__pycache__
+
 # Sonarlint plugin
 
 # End of https://www.toptal.com/developers/gitignore/api/vscode,pycharm+all,intellij+all,webstorm+all,python,java,jupyternotebooks,node
