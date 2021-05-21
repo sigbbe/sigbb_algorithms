@@ -6,8 +6,7 @@ from scipy.stats import pearsonr
 from sklearn.metrics import jaccard_score as scikit_jaccard
 from sklearn.metrics.pairwise import cosine_similarity as scikit_cosine
 from sklearn.metrics.pairwise import euclidean_distances as scikit_euclidean
-
-from .sigbbe_algorithms.utils import plot
+from utils import plot
 
 data = np.array([
     dict(

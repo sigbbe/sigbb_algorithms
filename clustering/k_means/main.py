@@ -1,8 +1,12 @@
+import sys
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn import metrics
 from sklearn.metrics import silhouette_score as sklearn_silhouette_score
+
+# from ...similarity_measures import similarity
 
 
 def list_of_sets_eq(los1, los2):
@@ -114,7 +118,8 @@ def do_preprocessing(data, f):
 
 
 if __name__ == '__main__':
-    data_frame = pd.read_csv('data/v_2017.csv')
+    path_to_data = sys.path[0] + '/data/v_2015.csv'
+    data_frame = pd.read_csv(path_to_data)
     data_array = data_frame.to_numpy()
     data_array_list = do_preprocessing(data_array, f)
     data_array = data_array_list
@@ -133,23 +138,18 @@ if __name__ == '__main__':
         if len(clusters[i]) < 1:
             continue
         print(f'Datapoints in cluster {i}:')
+        print(data_array[list(clusters[i]), :].T[0])
         print(data_array[list(clusters[i]), :].T)
         data_points_in_cluster = data_array[list(clusters[i]), :].T
         cluster_centroid = centroids[i, :].T
-        tmp = ax.scatter(*data_points_in_cluster,
-                         [colors[0]]*len(data_points_in_cluster))
-        color = tmp.get_facecolor()
-        tmp_color = '#fff000'
-        ax.scatter(*cluster_centroid, c=colors[i])
-        ax.annotate(f"Centroid[{i}]", xy=(centroids[i, 0], centroids[i, 1]))
+        try:
+            tmp = ax.scatter(*data_points_in_cluster,
+                             [colors[0]]*len(data_points_in_cluster))
+            color = tmp.get_facecolor()
+            tmp_color = '#fff000'
+            ax.scatter(*cluster_centroid, c=colors[i])
+            ax.annotate(f"Centroid[{i}]", xy=(
+                centroids[i, 0], centroids[i, 1]))
+        except:
+            break
     plt.show()
-
-    # test_data = np.ndarray([
-    #     [0.64105096, 0.49883149],
-    #     [0.32758003, 0.72580733],
-    #     [0.61195803, 0.08976073]
-    # ])
-    # test_data = [[round(x[0], 2), round(x[1], 2)] for x in test_data]
-    # print(test_data)
-    # print(
-    #     sum(np.power(np.linalg.norm(test_data[0] - test_data[1], axis=1), 2)))

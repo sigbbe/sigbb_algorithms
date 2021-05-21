@@ -9,6 +9,6 @@ if __name__ == '__main__':
     labels = ['Something', 'Something else']
     kmeans = KMeans(init="k-means++", n_clusters=n_digits, n_init=4,
                     random_state=0)
-    print(kmeans)
+    kmeans.fit_predict(n_digits)
 
 print(82 * '_')
