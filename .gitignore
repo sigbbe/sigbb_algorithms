@@ -522,4 +522,4 @@ Thumbs.db
 
 # End of https://www.toptal.com/developers/gitignore/api/vscode,pycharm+all,intellij+all,webstorm+all,python,java,jupyternotebooks,node
 
-*/scripts_for_exam_2021
+*scripts_for_exam_2021/*
