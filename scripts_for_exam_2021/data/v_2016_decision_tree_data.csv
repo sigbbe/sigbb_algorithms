@@ -1,0 +1,17 @@
+Age,Car type,Lenght per year,Bonus,Damage
+L,Ferrari,8000,Low,Yes
+M,BMW,8000,High,No
+H,Lexus,Unlimited,High,Yes
+L,Audi,8000,High,No
+H,Opel,8000,Low,Yes
+M,Toyota,8000,Low,No
+M,Honda,8000,High,No
+M,Nissan,8000,High,No
+M,Audi,Unlimited,High,No
+M,BMW,8000,Low,Yes
+H,Toyota,Unlimited,High,No
+L,Nissan,4000,Low,Yes
+L,Opel,Unlimited,High,Yes
+M,Audi,8000,High,No
+M,Opel,8000,High,No
+M,Toyota,4000,Low,No
