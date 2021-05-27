@@ -106,16 +106,36 @@ def runApriori(data_iter, minSupport, minConfidence):
     return toRetItems, toRetRules
 
 
-def printResults(items, rules):
+def printResults(items, rules, num_transactions):
     print("\n------------ITEMS-----------------")
     for item, support in sorted(items, key=operator.itemgetter(1)):
-        print("item: %s,\t%i" % (str(item), int(support * 10)))
+        print("item: %s,\t%s" %
+              (str(item), int(float(support)*num_transactions)))
 
-    # print("\n------------RULES-----------------")
-    # for rule, confidence in sorted(rules, key=operator.itemgetter(1)):
-    #     pre, post = rule
-    #     print("Rule: %s ==> %s,\t%.3f" % (str(pre), str(post), confidence))
-    # print("\n")
+    print("\n------------RULES-----------------")
+    for rule, confidence in sorted(rules, key=operator.itemgetter(1)):
+        pre, post = rule
+        print("Rule: %s ==> %s,\t%.3f" % (str(pre), str(post), confidence))
+    print("\n")
+
+
+def number_of_transactions(file, head=False):
+    import csv
+    count = -1
+    try:
+        with open(file, 'r', newline='') as f:
+            reader = csv.reader(f)
+            header = None
+            if head:
+                next(reader)
+            count = 0
+            for row in reader:
+                if len(row) > 0:
+                    count += 1
+    except Exception as e:
+        print(e)
+        return -1
+    return count
 
 
 def dataFromFile(file_name):
@@ -130,36 +150,43 @@ def dataFromFile(file_name):
 
 if __name__ == "__main__":
     opt_parser = OptionParser()
-    opt_parser.add_option('-f', '--inputFile',
-                          dest='input',
-                          help='filename containing csv',
-                          default=None)
-    opt_parser.add_option('-s', '--minSupport',
-                          dest='minS',
-                          help='minimum support value',
-                          default=0.15,
-                          type='float')
-    opt_parser.add_option('-c', '--minConfidence',
-                          dest='minC',
-                          help='minimum confidence value',
-                          default=0.6,
-                          type='float')
+    opt_parser.add_option(
+        '-f', '--inputFile',
+        dest='input',
+        help='filename containing csv',
+        default=None
+    )
+    opt_parser.add_option(
+        '-s', '--minSupport',
+        dest='minS',
+        help='minimum support value',
+        default=0.15,
+        type='float'
+    )
+    opt_parser.add_option(
+        '-c', '--minConfidence',
+        dest='minC',
+        help='minimum confidence value',
+        default=0.6,
+        type='float'
+    )
 
     (options, args) = opt_parser.parse_args()
 
     inFile = None
+    file_path = None
     if options.input is None:
         inFile = sys.stdin
+        file_path = sys.stdin
     elif options.input is not None:
-        print(options.input)
+        file_path = options.input
         inFile = dataFromFile(options.input)
     else:
         print('No dataset filename specified, system with exit\n')
         sys.exit('System will exit')
-
+    num_transactions = number_of_transactions(file_path)
     minSupport = options.minS
     minConfidence = options.minC
 
     items, rules = runApriori(inFile, minSupport, minConfidence)
-
-    printResults(items, rules)
+    printResults(items, rules, num_transactions)
